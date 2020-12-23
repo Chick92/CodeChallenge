@@ -1,17 +1,13 @@
 #include "csvparser.h"
 #include <iostream> 
 #include <vector>
-
+#include <cstdio>
 using namespace std; 
 
 
-double load_coordinates(){
+double** load_coordinates(){
 	int i =  0;
 	vector<double> coords;
-	
-
-
-
 	CsvParser *csvparser = CsvParser_new("coordinates.csv", ",", 0);
 	CsvRow *row;
 
@@ -23,34 +19,44 @@ double load_coordinates(){
     	i++;				// = longitude
 	}
 	CsvParser_destroy(csvparser);
-	double coordinates[i][2];
-
-	for(int j = 0; j<i;, j++){
-		coordinates[j][0] = coords[j*2] // this maths is wrong
-		coordinates[j][1] = coords[j*2+1]
-	}
-
-    //cout << "vector elements are: ";
-    //for (int i = 0; i < lattitude.size(); ++i) {
-    //    cout << lattitude[i] << ' ';
-    //}
-    //cout << endl;
-
-    	return coordinates;
+    
+    double** array2D = 0;
+    array2D = new double*[i];
+    for (int h = 0; h < i; h++){
+        array2D[h] = new double[2];
+        for (int w = 0; w < 2; w++){
+            array2D[h][w] = coords[w + 2 * h];
+        }
+    }
+    return array2D;
 }
 
 
 
-//std::string  s  = "0.6"
-//std::wstring ws = "0.7"
-//double d  = std::stod(s);
-//double dw = std::stod(ws);
-
 
 
 int main() {
-	double a;
-	a = load_coordinates();
+	double** a = load_coordinates();
+    int height = 81;
+    int width = 2;
+    
+    for (int h = 0; h < height; h++){
+        for (int w = 0; w < width; w++){
+            printf("%f,", a[h][w]);
+        }
+            printf("\n");
+    }
+
+          // important: clean up memory
+          printf("\n");
+          printf("Cleaning up memory...\n");
+          for (int h = 0; h < height; h++)
+          {
+            delete [] a[h];
+          }
+          delete [] a;
+          a = 0;
+          printf("Ready.\n");
 
   return 0;
 }

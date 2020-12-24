@@ -1,12 +1,13 @@
 #include "csvparser.h"
+#include "Num.h"
 #include <iostream> 
 #include <vector>
 #include <cstdio>
+
 using namespace std; 
 
 
-double** load_coordinates(){
-	int i =  0;
+vector<double> load_coordinates_vector(){
 	vector<double> coords;
 	CsvParser *csvparser = CsvParser_new("coordinates.csv", ",", 0);
 	CsvRow *row;
@@ -16,47 +17,40 @@ double** load_coordinates(){
     	coords.push_back(std::stod(rowFields[0])); // It is significantly easier to use a 1D vector
     	coords.push_back(std::stod(rowFields[1])); // and just itterate over it as n = lattitude and n+1
     	CsvParser_destroy_row(row);	
-    	i++;				// = longitude
 	}
 	CsvParser_destroy(csvparser);
     
-    double** array2D = 0;
-    array2D = new double*[i];
-    for (int h = 0; h < i; h++){
-        array2D[h] = new double[2];
-        for (int w = 0; w < 2; w++){
-            array2D[h][w] = coords[w + 2 * h];
-        }
-    }
-    return array2D;
+    return coords;
 }
 
-
-
-
-
 int main() {
-	double** a = load_coordinates();
-    int height = 81;
-    int width = 2;
-    
-    for (int h = 0; h < height; h++){
-        for (int w = 0; w < width; w++){
-            printf("%f,", a[h][w]);
-        }
-            printf("\n");
+    std::vector<double> coordinates = load_coordinates_vector();
+    int size = coordinates.size();
+    for(int i = 0; i < size/2; i=i+2){
+        printf("Coordinate %i - Latitude / Longitude %f %f\n",i, coordinates[i], coordinates[i+1]);
     }
+    
+    Num n(4);
+    Num n2(5);
+    
+    printf("number n = %i\n ", n.getNum());
+    printf("number n2 = %i\n", n2.getNum());
 
-          // important: clean up memory
-          printf("\n");
-          printf("Cleaning up memory...\n");
-          for (int h = 0; h < height; h++)
-          {
-            delete [] a[h];
-          }
-          delete [] a;
-          a = 0;
-          printf("Ready.\n");
+    //printf("size of the vector is %i\n", size);
+    
+    //for (auto i = coordinates.begin(); i != coordinates.end(); ++i)
+    //std::cout << *i << ' ';
+    //Journey t1(10, 50, 59);
+    //t1.print();   // 10:50:59
+    //Journey t2;
+    //t2.print(); // 06:39:09
+    //t2.setTime(6, 39, 9);
+    //t2.print();  // 06:39:09
+   
+    //if(t1.equals(t2))
+      //  cout << "Two objects are equal\n";
+    //else
+      //  cout << "Two objects are not equal\n";	
 
-  return 0;
+    //return 0;
 }

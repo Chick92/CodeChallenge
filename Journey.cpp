@@ -3,17 +3,19 @@
 #include <vector>
 #include <cstdio>
 #include <math.h>
-#include <opencv2/opencv.hpp> //Include file for every supported OpenCV function. Hint: Slow to compile.
+#include <opencv2/opencv.hpp>
 #include <string>
 
-using namespace cv;  // optional 
-//using namespace std; 
+using namespace cv;
 
  
-// Journey constructor
+// Journey class constructor
 Journey::Journey(std::vector<double> coordinates, std::string name)
 {
-    SetCoordinates(coordinates, name);
+    SetCoordinates(coordinates, name); // pass map name as string and a set of lat/lon coordinates and time stamps as a 1D vector
+    // a 1D vector is used rather than a 2D vector as it is easier to set up. There will always be 3 data parts - lat lon and time stamp
+    // so it's not particualrly complicated to manipulate the vector. Passing the data in as a 2D array was considered, but it is not
+    // possible to determine the length of a 2D array which is passed as a pointer to a pointer, which is how the array must be passed.
     
 }
 
@@ -24,7 +26,11 @@ void Journey::SetCoordinates(std::vector<double> coordinates, std::string name)
     journey_name = name;
 }
 
-
+// I used a Garmin GPX file to give me some coordinates, and used a python script to turn these into a csv file with lat / lon and time stamps. 
+// I know the task said speed, but .gpx does not have a speed parameter as it's something that is calculated. I logged it as time since
+// midnight as I only went on a 4 min walk round my parents house to get the coordinates. .GPX gives a full time stamp as year month day hour
+// minute second, but we're only interested in the relative difference in time between successive coordinates, therefore i logged it as seconds
+// since midnight. 
 void Journey::PrintCoordinates(){
     int size = journey_coordinates.size();
     printf("size of array %i\n", size);
@@ -34,7 +40,7 @@ void Journey::PrintCoordinates(){
 }
 
 double Journey::CalculateTotalDistanceTravelled(){
-    
+    // map width and height in meters - taken from the scale bar on apple maps. 
     double width = 117.0;
     double height = 172.8;
     double lat1,lon1,lat2,lon2,time1,time2,speed;
@@ -83,6 +89,8 @@ double Journey::CalculateTotalDistanceTravelled(){
     return distance;
 }
 
+//calculates the distance between 2 points on a sphere. The earth is not a perfect sphere but the discrepency is probably several orders 
+//of magnitude less than a rounding error at this scale. 
 double Journey::ReturnDistanceBetweenPoints(double lat1, double lon1, double lat2, double lon2){
     
     int R = 6371000; // metres
@@ -97,9 +105,11 @@ double Journey::ReturnDistanceBetweenPoints(double lat1, double lon1, double lat
     double d = R * c; // in metres
     return d;
 }
+// using Mercator projections to overlay the lat and lon onto a map. Again, at this scale the distortion of a Mercator map is trivial, and
+// apple maps uses mercator projections anyway, which should cancel it out. 
 
 //https://mathworld.wolfram.com/MercatorProjection.html
-//https://stackoverflow.com/questions/16080225/convert-lat-long-to-x-y-coordinates-c
+//https://en.wikipedia.org/wiki/Mercator_projection
 double Journey::MercatorGetX(double lon, int width){
     // width is map width
     double x = fmod((width*(180+lon)/360), (width +(width/2)));
@@ -129,13 +139,6 @@ void Journey::DrawMap(){
     double originX = 57.733086;
     double originY = 65.345893;
     
-    
-    //for (int i = 0: i < size; i++){
-      //  utm_coords[i][0] = utm_coords_vec[i*3];   
-        //utm_coords[i][1] = utm_coords_vec[i*3+1];
-       // utm_coords[i][2] = utm_coords_vec[i*3+2];      
-    //}
-
 
     for (int i = 0; i < (size-3); i++){ // use journey coordinates size as utm_coords doesnt have defined size - gives compiler error
         X = int((utm_coords_vec[i*3] - originX) / 0.00000071);
@@ -154,8 +157,8 @@ void Journey::DrawMap(){
             }
         }
     }
-    cv::imwrite("new_map.jpg", image);
-    cv::imshow("Changed a part of the image", image);
+    cv::imwrite("map_with_overlay.jpg", image);
+    cv::imshow("map with overlay", image);
     waitKey(0);
      
 }

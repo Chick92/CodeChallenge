@@ -8,3 +8,13 @@ The C++ program utilises a C library to parse CSV files, CSVParser, which can be
 
 The command to compile everything is:
 $ g++ main.cpp Journey.cpp -I CsvParser/include CsvParser/src/csvparser.c -o MapJourney `pkg-config --cflags --libs opencv`
+
+It is vitally important that you use a verion of g++ => 8
+
+If you're host system is Ubuntu 16, you'll need to install g++ 8 and force it to use that version.
+
+$ g++-8 main.cpp Journey.cpp -I CsvParser/include CsvParser/src/csvparser.c -o MapJourney `pkg-config --cflags --libs opencv`
+
+Also, if you're going to copy and paste the above command, do so from a text file, not githubs visualisation of said file, as it uses the " ` " as syntax and hence doesn't display it. 
+
+A Docker image is provided for your convenience, with openCV and G++ >= 8 installed, and the required files stored in the CodeChallenge directory.   

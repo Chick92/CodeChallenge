@@ -17,7 +17,7 @@
 // pixel height = 0.00000071
 
 //g++ main.cpp Journey.cpp -I CsvParser/include CsvParser/src/csvparser.c -o MapJourney `pkg-config --cflags --libs opencv`
-
+//you must use g++ version => 8
 
 
 std::vector<double> load_coordinates_vector(){
@@ -47,8 +47,7 @@ int main() {
     Journey j1(coordinates, name);
     j1.PrintCoordinates();
     distance = j1.CalculateTotalDistanceTravelled();
-    j1.DrawMap();
-    printf("exiting now");
+    j1.DrawMap();^
     return 0; 
 }
 

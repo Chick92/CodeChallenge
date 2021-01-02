@@ -144,9 +144,9 @@ void Journey::DrawMap(){
         X = int((utm_coords_vec[i*3] - originX) / 0.00000071);
         Y = int((utm_coords_vec[i*3+1] - originY) / 0.00000071);   
         colour = int( (utm_coords_vec[i*3+2] - min_speed)*(255/(max_speed-min_speed)) );
-        printf("size, i, X and Y %i %i %i %i\n", size, i, X,Y);
-        for (x=X; x<X+7; x++) { //x=190, y = 170 for start
-            for (y=Y; y<Y+7; y++ ){
+        //printf("size, i, X and Y %i %i %i %i\n", size, i, X,Y);
+        for (x=X; x<X+10; x++) { //x=190, y = 170 for start
+            for (y=Y; y<Y+10; y++ ){
                 cv::Vec3b color = image.at<Vec3b>(Point(x,y)); // get the pixel
                 color[0]=0;
                 color[1]=colour;

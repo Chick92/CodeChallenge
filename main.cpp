@@ -16,6 +16,8 @@
 // pixel width = 0.00000071
 // pixel height = 0.00000071
 
+//g++ main.cpp Journey.cpp -I CsvParser/include CsvParser/src/csvparser.c -o MapJourney `pkg-config --cflags --libs opencv`
+
 
 
 std::vector<double> load_coordinates_vector(){

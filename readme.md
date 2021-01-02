@@ -29,4 +29,6 @@ When run, the code will load the coordinates and time stamp from the CSV file, i
 
 I determined the distance between points assuming the earth was a perfect sphere. At this scale, the difference between assumed and real world will probably be a few orders of magnitude less than a rounding error. I also used a mercator projection to overlay the points onto a 2D map. Again at this scale the dofference is trivial, and since as though apple maps use a mercator projection anyway, it's cancelled out. 
 
+The original Garmin Connect map is also included, for you to compare. 
+
 There are a few comments in the code disucssing why i opted to do things a certain way, i won't repeat them here. 

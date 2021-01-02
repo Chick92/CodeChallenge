@@ -7,4 +7,4 @@ OpenCV was installed on the pi using pre compiled binaries from the comunity, as
 The C++ program utilises a C library to parse CSV files, CSVParser, which can be found at https://sourceforge.net/projects/cccsvparser/ - This was used purely because i'd used it before on other projects, and it's relatively easy to work with. 
 
 The command to compile everything is:
-g++ main.cpp Journey.cpp -I CsvParser/include CsvParser/src/csvparser.c -o MapJourney `pkg-config --cflags --libs opencv`
+$ g++ main.cpp Journey.cpp -I CsvParser/include CsvParser/src/csvparser.c -o MapJourney `pkg-config --cflags --libs opencv`

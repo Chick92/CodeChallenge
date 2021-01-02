@@ -47,7 +47,7 @@ int main() {
     Journey j1(coordinates, name);
     j1.PrintCoordinates();
     distance = j1.CalculateTotalDistanceTravelled();
-    j1.DrawMap();^
+    j1.DrawMap();
     return 0; 
 }
 

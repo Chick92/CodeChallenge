@@ -64,7 +64,7 @@ double Journey::CalculateTotalDistanceTravelled(){
 
         speed = ReturnDistanceBetweenPoints(lat1,lon1,lat2,lon2) / (time2 - time1);
         distance = distance + ReturnDistanceBetweenPoints(lat1,lon1,lat2,lon2);
-        printf("speed = %f mercator X/Y = %f %f \n ", speed, MercatorGetX(lon1, width), MercatorGetY(lat1, height, width));
+        printf("speed = %f ms^-1 mercator X/Y = %f %f \n ", speed, MercatorGetX(lon1, width), MercatorGetY(lat1, height, width));
         //cna't index an array of unknown size as a class member - so using vector instead
         utm_coords_vec.push_back(MercatorGetX(lon1, width));
         utm_coords_vec.push_back(MercatorGetY(lat1, height, width));

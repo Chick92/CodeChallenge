@@ -19,7 +19,8 @@ Also, if you're going to copy and paste the above command, do so from a text fil
 
 A Docker image is provided for your convenience, with openCV and G++ >= 8 installed, and the required files stored in the CodeChallenge directory.   
 
-docker pull chick92/opencd_docker
+docker pull chick92/hm
+
 
 I used a .GPX file from my garmin watch to generate some lat / lon coordinates, of a walk around my parents estate. .gpx does not give speed, but rather a year, month, day, hour, minute, second time stamp. So, I wrote a python script to convert this to a CSV file and (lat / lon) and add a third data field for time since midnight (seconds) as we only care about time difference between points, not absolute time.
 

@@ -1,4 +1,4 @@
-This repositiory contains my work on a c++ coding challenge set by Horiba Mirra.
+This repositiory contains my work on a c++ coding challenge.
 
 The bulk of the development work was done on an Ipad Pro / Raspberry pi 4 combo, as i received the challenge whilst i was already travelling down to my parents for the Christmas / New years break.
 
